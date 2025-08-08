@@ -377,6 +377,15 @@
 <body>
     <div class="container">
         <div class="header">
+            <nav style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; font-size: 0.9em;">
+                    <a href="index.html" style="color: white; text-decoration: none; padding: 8px 15px; background: rgba(255,255,255,0.2); border-radius: 20px; transition: all 0.3s ease;">🏠 Main Index</a>
+                    <a href="course_syllabus_guide.html" style="color: white; text-decoration: none; padding: 8px 15px; background: rgba(255,255,255,0.1); border-radius: 20px; transition: all 0.3s ease;">📖 Course Syllabus</a>
+                    <a href="instructor_addendum_guide.html" style="color: white; text-decoration: none; padding: 8px 15px; background: rgba(255,255,255,0.1); border-radius: 20px; transition: all 0.3s ease;">📄 Instructor Addendum</a>
+                    <a href="class_protocols_guide.html" style="color: white; text-decoration: none; padding: 8px 15px; background: rgba(255,255,255,0.1); border-radius: 20px; transition: all 0.3s ease;">📋 Class Protocols</a>
+                    <span style="color: #ecf0f1;">🤖 AI Use Policy</span>
+                </div>
+            </nav>
             <h1>🤖 Understanding AI Use Policy</h1>
             <p>Navigate the responsible use of AI tools in your cybersecurity education</p>
         </div>
@@ -652,7 +661,23 @@
             document.getElementById('overlay').style.display = 'none';
         }
 
-        // Add click event listeners to all clickable sections
+                    // Add navigation hover effects
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    this.style.background = 'rgba(255,255,255,0.3)';
+                    this.style.transform = 'translateY(-2px)';
+                });
+                
+                link.addEventListener('mouseleave', function() {
+                    if (!this.href.includes(window.location.pathname.split('/').pop())) {
+                        this.style.background = 'rgba(255,255,255,0.1)';
+                    }
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Add click event listeners to all clickable sections
         document.addEventListener('DOMContentLoaded', function() {
             const clickableSections = document.querySelectorAll('.clickable-section');
             clickableSections.forEach(section => {
