@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding AI Use Policy - NETW 107</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6b73ff 0%, #000dff 50%, #9b59b6 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #6b73ff, #000dff, #9b59b6);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '🤖';
+            position: absolute;
+            font-size: 8em;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .policy-document {
+            background: #f8f9fa;
+            margin: 30px;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+
+        .document-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .document-title h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .document-title h3 {
+            color: #6b73ff;
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .document-title p {
+            color: #7f8c8d;
+        }
+
+        .clickable-section {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            position: relative;
+            border-left: 4px solid transparent;
+        }
+
+        .clickable-section:hover {
+            background: linear-gradient(45deg, #e8f0ff, #f0f8ff);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-left: 4px solid #6b73ff;
+        }
+
+        .clickable-section::before {
+            content: "🔍";
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 1.3em;
+            opacity: 0.7;
+        }
+
+        .section-header {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #6b73ff;
+        }
+
+        .intro-section {
+            background: linear-gradient(45deg, #e8f5e8, #f0fff0);
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .objective-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        .use-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .acceptable-uses {
+            background: linear-gradient(45deg, #d4edda, #c3e6cb);
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .unacceptable-uses {
+            background: linear-gradient(45deg, #f8d7da, #f5c6cb);
+            border: 2px solid #dc3545;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .use-case h4 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .acceptable-uses h4 {
+            color: #155724;
+        }
+
+        .unacceptable-uses h4 {
+            color: #721c24;
+        }
+
+        .use-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .use-list li {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 5px;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .acceptable-uses .use-list li:before {
+            content: "✅";
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .unacceptable-uses .use-list li:before {
+            content: "❌";
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .responsibility-section {
+            background: linear-gradient(45deg, #fff3cd, #ffeaa7);
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .consequences-section {
+            background: linear-gradient(45deg, #f8d7da, #e2a8a8);
+            border: 2px solid #e74c3c;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            animation: popupAppear 0.4s ease;
+        }
+
+        @keyframes popupAppear {
+            from {
+                transform: scale(0.7) translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .popup h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            border-bottom: 2px solid #6b73ff;
+            padding-bottom: 10px;
+        }
+
+        .popup p {
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .popup ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .popup li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: #c0392b;
+        }
+
+        .highlight-tip {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .tip-icon {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #dc3545;
+        }
+
+        .success-tip {
+            background: #cce5ff;
+            border: 1px solid #99d6ff;
+            color: #004085;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #007bff;
+        }
+
+        .ai-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .policy-document {
+                margin: 15px;
+                padding: 20px;
+            }
+            
+            .objectives-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .use-cases {
+                grid-template-columns: 1fr;
+            }
+            
+            .popup {
+                margin: 20px;
+                padding: 25px;
+                max-height: 90vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Understanding AI Use Policy</h1>
+            <p>Navigate the responsible use of AI tools in your cybersecurity education</p>
+        </div>
+
+        <div class="policy-document">
+            <div class="document-title">
+                <h2>NETW 107 AI Use Policy 🔬</h2>
+                <h3>AI/ChatGPT Use Policy – Spring 2024</h3>
+                <p>Mike Qaissaunee</p>
+            </div>
+
+            <div class="clickable-section" data-info="introduction">
+                <div class="intro-section">
+                    <h3><span class="ai-icon">🎯</span>Introduction</h3>
+                    <p>As this is a skills-based course focused on networking and cybersecurity, incorporating advanced technology like ChatGPT is appropriate and beneficial. This policy outlines the acceptable use of ChatGPT in this class, with the goal of enhancing learning while maintaining academic integrity.</p>
+                </div>
+            </div>
+
+            <div class="clickable-section" data-info="objectives">
+                <div class="section-header">
+                    <h3><span class="ai-icon">📋</span>Objectives</h3>
+                </div>
+                <div class="objectives-grid">
+                    <div class="objective-card">
+                        <h4>📚 Supplement Learning</h4>
+                        <p>To supplement instructional materials and provide additional perspectives.</p>
+                    </div>
+                    <div class="objective-card">
+                        <h4>💡 Brainstorming Tool</h4>
+                        <p>To serve as a tool for brainstorming and problem-solving in assignments.</p>
+                    </div>
+                    <div class="objective-card">
+                        <h4>🔧 Debugging Assistant</h4>
+                        <p>To assist with code debugging and theoretical queries related to course material.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clickable-section" data-info="use-cases">
+                <h3 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">⚖️ Acceptable vs Unacceptable Uses</h3>
+                <div class="use-cases">
+                    <div class="acceptable-uses">
+                        <h4>✅ Acceptable Uses:</h4>
+                        <ul class="use-list">
+                            <li><strong>General Queries:</strong> Students can use ChatGPT to understand course topics and seek explanations or summaries.</li>
+                            <li><strong>Assignment Assistance:</strong> ChatGPT can be consulted for hints or guidance on approach but should not be used to complete assignments verbatim.</li>
+                            <li><strong>Code Debugging:</strong> While working on code-based tasks, ChatGPT may be used for troubleshooting and debugging advice.</li>
+                        </ul>
+                    </div>
+                    <div class="unacceptable-uses">
+                        <h4>❌ Unacceptable Uses:</h4>
+                        <ul class="use-list">
+                            <li><strong>Direct Submission:</strong> Copying and pasting responses from ChatGPT directly into assignments is strictly prohibited and will be treated as plagiarism.</li>
+                            <li><strong>Examination Assistance:</strong> ChatGPT should not be used during quizzes, examinations, or any other assessments that are meant to be completed without external help.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clickable-section" data-info="responsibilities">
+                <div class="responsibility-section">
+                    <h3><span class="ai-icon">👤</span>Responsibilities:</h3>
+                    <ul style="margin: 15px 0; padding-left: 20px;">
+                        <li style="margin: 10px 0; line-height: 1.6;"><strong>Students are responsible for understanding and adhering to this policy.</strong></li>
+                        <li style="margin: 10px 0; line-height: 1.6;"><strong>In cases of ambiguity, students should consult the instructor to clarify acceptable use.</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="clickable-section" data-info="consequences">
+                <div class="consequences-section">
+                    <h3><span class="ai-icon">⚠️</span>Consequences:</h3>
+                    <p style="font-size: 1.1em; line-height: 1.6; color: #721c24;">
+                        Violation of this policy may result in a reduction of assignment grades, a failing grade for the course, or further academic disciplinary actions as deemed appropriate by the institution.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="popup" id="popup">
+            <button class="close-btn" onclick="closePopup()">×</button>
+            <div id="popup-content"></div>
+        </div>
+    </div>
+
+    <script>
+        const popupContent = {
+            'introduction': {
+                title: 'Why AI Policy Matters in Cybersecurity Education',
+                content: `
+                    <p>This forward-thinking approach recognizes that AI tools are becoming integral to cybersecurity practice while ensuring educational integrity.</p>
+                    <h4>Why AI is appropriate for this course:</h4>
+                    <ul>
+                        <li><strong>Industry Reality:</strong> Cybersecurity professionals increasingly use AI tools for threat analysis, code review, and problem-solving</li>
+                        <li><strong>Skills-Based Learning:</strong> The focus is on understanding concepts and applying knowledge, not memorizing facts</li>
+                        <li><strong>Enhanced Learning:</strong> AI can provide instant explanations and multiple perspectives on complex topics</li>
+                        <li><strong>Professional Preparation:</strong> Learning to use AI responsibly prepares you for real-world cybersecurity roles</li>
+                    </ul>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">🎯 Educational Philosophy:</span> This policy balances innovation with integrity, teaching you to leverage advanced tools while maintaining academic honesty and developing genuine understanding.
+                    </div>
+                    <div class="success-tip">
+                        <span class="tip-icon">🚀 Future-Ready Approach:</span> By learning to use AI tools responsibly now, you're developing skills that will be essential in your cybersecurity career where AI-assisted analysis and decision-making are becoming standard practice.
+                    </div>
+                `
+            },
+            'objectives': {
+                title: 'Strategic Objectives for AI Integration',
+                content: `
+                    <p>These objectives are designed to maximize learning benefits while maintaining educational integrity.</p>
+                    <h4>Detailed Objective Analysis:</h4>
+                    <ul>
+                        <li><strong>Supplemental Learning:</strong>
+                            <ul>
+                                <li>Get alternative explanations when concepts are unclear</li>
+                                <li>Access different perspectives on cybersecurity topics</li>
+                                <li>Bridge gaps between textbook content and practical application</li>
+                                <li>Enhance understanding with examples and analogies</li>
+                            </ul>
+                        </li>
+                        <li><strong>Brainstorming and Problem-Solving:</strong>
+                            <ul>
+                                <li>Generate ideas for approaching complex assignments</li>
+                                <li>Explore different methodologies for security implementations</li>
+                                <li>Develop creative solutions to networking challenges</li>
+                                <li>Understand multiple approaches to cybersecurity problems</li>
+                            </ul>
+                        </li>
+                        <li><strong>Debugging and Technical Support:</strong>
+                            <ul>
+                                <li>Get help troubleshooting code syntax and logic errors</li>
+                                <li>Understand error messages and their solutions</li>
+                                <li>Learn debugging strategies and best practices</li>
+                                <li>Clarify theoretical concepts with practical examples</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="success-tip">
+                        <span class="tip-icon">💡 Strategic Use:</span> Use AI as a learning amplifier, not a learning replacement. The goal is to understand concepts more deeply, not to bypass the learning process.
+                    </div>
+                `
+            },
+            'use-cases': {
+                title: 'Navigating Acceptable vs Unacceptable AI Use',
+                content: `
+                    <p>Understanding the boundaries helps you leverage AI benefits while maintaining academic integrity.</p>
+                    <h4>Acceptable Use Examples:</h4>
+                    <ul>
+                        <li><strong>General Queries:</strong>
+                            <ul>
+                                <li>"Explain how firewalls work in simple terms"</li>
+                                <li>"What are the differences between symmetric and asymmetric encryption?"</li>
+                                <li>"Help me understand network topologies with examples"</li>
+                            </ul>
+                        </li>
+                        <li><strong>Assignment Guidance:</strong>
+                            <ul>
+                                <li>"What approach should I take for analyzing network security?"</li>
+                                <li>"What factors should I consider when designing a security policy?"</li>
+                                <li>"Help me brainstorm ideas for my cybersecurity project"</li>
+                            </ul>
+                        </li>
+                        <li><strong>Code Debugging:</strong>
+                            <ul>
+                                <li>"Why isn't my Python script connecting to the server?"</li>
+                                <li>"Help me understand this error message"</li>
+                                <li>"What debugging steps should I try for this network configuration?"</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="warning">
+                        <strong>⚠️ Unacceptable Use Examples:</strong>
+                        <ul>
+                            <li>Copying entire assignment responses from AI</li>
+                            <li>Using AI during quizzes or exams</li>
+                            <li>Submitting AI-generated code without understanding it</li>
+                            <li>Having AI complete labs or projects for you</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">🎯 The Golden Rule:</span> Use AI to enhance your understanding and learning process, never to replace your thinking or bypass the educational objectives of assignments.
+                    </div>
+                `
+            },
+            'responsibilities': {
+                title: 'Your Responsibilities as an AI-Enabled Student',
+                content: `
+                    <p>With the privilege of using AI tools comes the responsibility to use them ethically and effectively.</p>
+                    <h4>Key Responsibilities:</h4>
+                    <ul>
+                        <li><strong>Policy Compliance:</strong>
+                            <ul>
+                                <li>Read and understand the complete AI use policy</li>
+                                <li>Follow guidelines consistently throughout the course</li>
+                                <li>Stay updated on any policy changes or clarifications</li>
+                                <li>Apply the policy to all assignments and activities</li>
+                            </ul>
+                        </li>
+                        <li><strong>Proactive Communication:</strong>
+                            <ul>
+                                <li>Ask for clarification when you're unsure about acceptable use</li>
+                                <li>Discuss gray areas with the instructor before proceeding</li>
+                                <li>Report any concerns or conflicts you encounter</li>
+                                <li>Seek guidance rather than making assumptions</li>
+                            </ul>
+                        </li>
+                        <li><strong>Academic Integrity:</strong>
+                            <ul>
+                                <li>Ensure your work demonstrates your own understanding</li>
+                                <li>Use AI as a learning tool, not a shortcut</li>
+                                <li>Be transparent about your AI use when appropriate</li>
+                                <li>Maintain the educational value of assignments</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="success-tip">
+                        <span class="tip-icon">💼 Professional Development:</span> Learning to use AI responsibly in an academic setting prepares you for ethical AI use in professional cybersecurity roles where the stakes are much higher.
+                    </div>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">🤝 Partnership Approach:</span> Think of the instructor as your partner in navigating AI use effectively. Open communication ensures you get maximum benefit while maintaining integrity.
+                    </div>
+                `
+            },
+            'consequences': {
+                title: 'Understanding Policy Violations and Consequences',
+                content: `
+                    <p>Clear consequences help maintain the integrity of the learning environment and ensure fair treatment for all students.</p>
+                    <h4>Potential Consequences:</h4>
+                    <ul>
+                        <li><strong>Assignment-Level:</strong> Reduction in grades for specific assignments where violations occur</li>
+                        <li><strong>Course-Level:</strong> Failing grade for the entire course in cases of serious or repeated violations</li>
+                        <li><strong>Institutional-Level:</strong> Academic disciplinary actions that may affect your academic record</li>
+                    </ul>
+                    <div class="warning">
+                        <strong>⚠️ Why Consequences Matter:</strong>
+                        <ul>
+                            <li><strong>Educational Integrity:</strong> Ensures all students learn the required skills and knowledge</li>
+                            <li><strong>Fair Assessment:</strong> Maintains the validity of grades and academic achievements</li>
+                            <li><strong>Professional Preparation:</strong> Teaches ethical standards expected in cybersecurity careers</li>
+                            <li><strong>Industry Trust:</strong> Protects the reputation of graduates and the program</li>
+                        </ul>
+                    </div>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">🛡️ Prevention Strategies:</span>
+                        <ul>
+                            <li>When in doubt, ask the instructor for clarification</li>
+                            <li>Document your learning process and AI interactions</li>
+                            <li>Focus on understanding rather than just completing assignments</li>
+                            <li>Use AI to enhance your capabilities, not replace them</li>
+                        </ul>
+                    </div>
+                    <div class="success-tip">
+                        <span class="tip-icon">🎯 Positive Mindset:</span> These policies aren't restrictions - they're guidelines to help you use powerful tools effectively while developing genuine expertise that will serve you throughout your cybersecurity career.
+                    </div>
+                `
+            }
+        };
+
+        function showPopup(sectionId) {
+            const content = popupContent[sectionId];
+            if (content) {
+                document.getElementById('popup-content').innerHTML = `
+                    <h3>${content.title}</h3>
+                    ${content.content}
+                `;
+                document.getElementById('overlay').style.display = 'flex';
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Add click event listeners to all clickable sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const clickableSections = document.querySelectorAll('.clickable-section');
+            clickableSections.forEach(section => {
+                section.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-info');
+                    showPopup(sectionId);
+                });
+            });
+
+            // Close popup when clicking overlay background
+            document.getElementById('overlay').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePopup();
+                }
+            });
+
+            // Close popup with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closePopup();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
