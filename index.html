@@ -25,7 +25,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
@@ -105,21 +105,24 @@
 
         .guides-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 40px;
-            max-width: 1000px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 35px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .guide-card {
             background: white;
             border-radius: 15px;
-            padding: 40px;
+            padding: 35px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.4s ease;
             border: 2px solid transparent;
             position: relative;
             overflow: hidden;
+            min-height: 550px;
+            display: flex;
+            flex-direction: column;
         }
 
         .guide-card::before {
@@ -129,8 +132,23 @@
             left: -100%;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, #3498db, #2980b9);
             transition: left 0.4s ease;
+        }
+
+        .guide-card.syllabus::before {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+
+        .guide-card.addendum::before {
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+        }
+
+        .guide-card.protocols::before {
+            background: linear-gradient(90deg, #8e44ad, #9b59b6);
+        }
+
+        .guide-card.ai-policy::before {
+            background: linear-gradient(90deg, #6b73ff, #9b59b6);
         }
 
         .guide-card:hover::before {
@@ -140,11 +158,26 @@
         .guide-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .guide-card.syllabus:hover {
             border-color: #3498db;
         }
 
+        .guide-card.addendum:hover {
+            border-color: #27ae60;
+        }
+
+        .guide-card.protocols:hover {
+            border-color: #8e44ad;
+        }
+
+        .guide-card.ai-policy:hover {
+            border-color: #6b73ff;
+        }
+
         .guide-icon {
-            font-size: 4em;
+            font-size: 3.5em;
             margin-bottom: 20px;
             display: block;
             text-align: center;
@@ -153,7 +186,7 @@
 
         .guide-card h3 {
             color: #2c3e50;
-            font-size: 1.6em;
+            font-size: 1.5em;
             margin-bottom: 15px;
             text-align: center;
         }
@@ -161,21 +194,24 @@
         .guide-card p {
             color: #666;
             line-height: 1.6;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: center;
+            flex-grow: 1;
         }
 
         .features-list {
             list-style: none;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            flex-grow: 1;
         }
 
         .features-list li {
-            padding: 8px 0;
+            padding: 6px 0;
             color: #555;
             border-bottom: 1px solid #f0f0f0;
             position: relative;
             padding-left: 25px;
+            font-size: 0.95em;
         }
 
         .features-list li:before {
@@ -188,7 +224,6 @@
         }
 
         .launch-btn {
-            background: linear-gradient(45deg, #3498db, #2980b9);
             color: white;
             padding: 15px 30px;
             border: none;
@@ -201,13 +236,51 @@
             display: inline-block;
             width: 100%;
             text-align: center;
+            margin-top: auto;
+        }
+
+        .guide-card.syllabus .launch-btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
             box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
         }
 
+        .guide-card.addendum .launch-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .guide-card.protocols .launch-btn {
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+        }
+
+        .guide-card.ai-policy .launch-btn {
+            background: linear-gradient(45deg, #6b73ff, #9b59b6);
+            box-shadow: 0 4px 15px rgba(107, 115, 255, 0.3);
+        }
+
         .launch-btn:hover {
-            background: linear-gradient(45deg, #2980b9, #3498db);
             transform: translateY(-2px);
+        }
+
+        .guide-card.syllabus .launch-btn:hover {
+            background: linear-gradient(45deg, #2980b9, #3498db);
             box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .guide-card.addendum .launch-btn:hover {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        .guide-card.protocols .launch-btn:hover {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            box-shadow: 0 6px 20px rgba(142, 68, 173, 0.4);
+        }
+
+        .guide-card.ai-policy .launch-btn:hover {
+            background: linear-gradient(45deg, #9b59b6, #6b73ff);
+            box-shadow: 0 6px 20px rgba(107, 115, 255, 0.4);
         }
 
         .launch-btn:active {
@@ -236,21 +309,22 @@
 
         .course-info {
             background: #e8f4f8;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
-            margin: 20px 0;
+            margin: 15px 0;
             border-left: 4px solid #3498db;
         }
 
         .course-info h4 {
             color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 1.2em;
+            margin-bottom: 8px;
+            font-size: 1.1em;
         }
 
         .course-info p {
             color: #555;
-            margin: 5px 0;
+            margin: 3px 0;
+            font-size: 0.95em;
         }
 
         .tips-section {
@@ -260,9 +334,9 @@
 
         .tips-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -298,6 +372,12 @@
             margin: 5px 0;
         }
 
+        @media (max-width: 1200px) {
+            .guides-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            }
+        }
+
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -317,7 +397,8 @@
             }
             
             .guide-card {
-                padding: 30px 20px;
+                padding: 25px 20px;
+                min-height: auto;
             }
             
             .tips-grid {
@@ -335,12 +416,38 @@
 
         <div class="subtitle">
             <h2>🎯 Course: NETW 107 - Introduction to Security</h2>
-            <p>Welcome to your interactive guide for understanding academic documents. These tools will help you become a more informed and successful student by teaching you how to interpret and use the essential documents you'll encounter throughout your college career.</p>
+            <p>Welcome to your comprehensive interactive guide for understanding academic documents. These tools will help you become a more informed and successful student by teaching you how to interpret and use the essential documents you'll encounter throughout your college career.</p>
         </div>
 
         <div class="guides-section">
             <div class="guides-grid">
-                <div class="guide-card">
+                <div class="guide-card syllabus">
+                    <span class="guide-icon">📖</span>
+                    <h3>Course Syllabus Guide</h3>
+                    <p>Navigate your complete course syllabus with confidence and understand every section's importance for your success.</p>
+                    
+                    <div class="course-info">
+                        <h4>🎓 What You'll Discover:</h4>
+                        <p>• Course learning outcomes and objectives</p>
+                        <p>• Detailed content and unit progression</p>
+                        <p>• Assessment methods and criteria</p>
+                        <p>• Academic policies and procedures</p>
+                    </div>
+
+                    <ul class="features-list">
+                        <li>Comprehensive course content overview</li>
+                        <li>Career relevance and professional connections</li>
+                        <li>Study strategies for each course unit</li>
+                        <li>Academic integrity and policy guidance</li>
+                        <li>Resource planning and time management</li>
+                    </ul>
+
+                    <a href="course_syllabus_guide.html" class="launch-btn">
+                        🚀 Explore Course Syllabus
+                    </a>
+                </div>
+
+                <div class="guide-card addendum">
                     <span class="guide-icon">📄</span>
                     <h3>Instructor Addendum Guide</h3>
                     <p>Learn how to read and understand your instructor's specific requirements, grading policies, and course expectations.</p>
@@ -366,29 +473,55 @@
                     </a>
                 </div>
 
-                <div class="guide-card">
-                    <span class="guide-icon">📖</span>
-                    <h3>Course Syllabus Guide</h3>
-                    <p>Navigate your complete course syllabus with confidence and understand every section's importance for your success.</p>
+                <div class="guide-card protocols">
+                    <span class="guide-icon">📋</span>
+                    <h3>Class Protocols Guide</h3>
+                    <p>Understand essential classroom guidelines, learning strategies, and expectations that contribute to your academic success.</p>
                     
                     <div class="course-info">
-                        <h4>🎓 What You'll Discover:</h4>
-                        <p>• Course learning outcomes and objectives</p>
-                        <p>• Detailed content and unit progression</p>
-                        <p>• Assessment methods and criteria</p>
-                        <p>• Academic policies and procedures</p>
+                        <h4>🎯 What You'll Master:</h4>
+                        <p>• "3 Before Me" independent learning strategy</p>
+                        <p>• Punctuality policies and their importance</p>
+                        <p>• Professional behavior expectations</p>
+                        <p>• Time management and respect principles</p>
                     </div>
 
                     <ul class="features-list">
-                        <li>Comprehensive course content overview</li>
-                        <li>Career relevance and professional connections</li>
-                        <li>Study strategies for each course unit</li>
-                        <li>Academic integrity and policy guidance</li>
-                        <li>Resource planning and time management</li>
+                        <li>Interactive "3 Before Me" learning approach</li>
+                        <li>Visual impact of lateness on the class</li>
+                        <li>Professional development insights</li>
+                        <li>Problem-solving strategies and resources</li>
+                        <li>Building respectful learning environments</li>
                     </ul>
 
-                    <a href="course_syllabus_guide.html" class="launch-btn">
-                        🚀 Explore Course Syllabus
+                    <a href="class_protocols_guide.html" class="launch-btn">
+                        🚀 Explore Class Protocols
+                    </a>
+                </div>
+
+                <div class="guide-card ai-policy">
+                    <span class="guide-icon">🤖</span>
+                    <h3>AI Use Policy Guide</h3>
+                    <p>Navigate the responsible use of AI tools in your cybersecurity education while maintaining academic integrity and maximizing learning.</p>
+                    
+                    <div class="course-info">
+                        <h4>🔬 What You'll Understand:</h4>
+                        <p>• Acceptable vs. unacceptable AI use cases</p>
+                        <p>• Educational objectives for AI integration</p>
+                        <p>• Professional responsibilities and ethics</p>
+                        <p>• Consequences and best practices</p>
+                    </div>
+
+                    <ul class="features-list">
+                        <li>Clear guidelines for ChatGPT and AI tools</li>
+                        <li>Industry-relevant AI integration strategies</li>
+                        <li>Academic integrity in the AI era</li>
+                        <li>Professional preparation for AI-enabled careers</li>
+                        <li>Ethical considerations and responsibilities</li>
+                    </ul>
+
+                    <a href="ai_use_policy_guide.html" class="launch-btn">
+                        🚀 Explore AI Use Policy
                     </a>
                 </div>
             </div>
@@ -468,14 +601,17 @@
             launchBtns.forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     // Add loading state
+                    const originalBg = this.style.background;
+                    const originalText = this.innerHTML;
+                    
                     this.style.background = 'linear-gradient(45deg, #95a5a6, #7f8c8d)';
                     this.innerHTML = '🔄 Loading...';
                     
                     // Allow the navigation to proceed
                     setTimeout(() => {
                         // This will only execute if the user stays on the page
-                        this.style.background = 'linear-gradient(45deg, #3498db, #2980b9)';
-                        this.innerHTML = this.innerHTML.replace('🔄 Loading...', '🚀 Explore');
+                        this.style.background = originalBg;
+                        this.innerHTML = originalText;
                     }, 2000);
                 });
             });
