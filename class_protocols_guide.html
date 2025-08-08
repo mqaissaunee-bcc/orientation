@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Class Protocols - NETW 107</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8e44ad 0%, #3498db 50%, #2c3e50 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #8e44ad);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .protocols {
+            background: #f8f9fa;
+            margin: 30px;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+
+        .course-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .course-title h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .course-title h3 {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .course-title p {
+            color: #95a5a6;
+        }
+
+        .clickable-section {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            position: relative;
+            border-left: 4px solid transparent;
+        }
+
+        .clickable-section:hover {
+            background: linear-gradient(45deg, #e8f5e8, #f0f8ff);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-left: 4px solid #27ae60;
+        }
+
+        .clickable-section::before {
+            content: "💡";
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 1.3em;
+            opacity: 0.7;
+        }
+
+        .three-before-me {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .logo-section {
+            flex: 0 0 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            background: white;
+            color: #2c3e50;
+            border-radius: 50px;
+            padding: 30px;
+            font-size: 3em;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .logo-icons {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .logo-icon {
+            background: #3498db;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+
+        .content-section {
+            flex: 1;
+        }
+
+        .content-section h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #ecf0f1;
+        }
+
+        .cost-of-late {
+            background: #fff9c4;
+            border: 2px solid #f39c12;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .cost-illustration {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .late-person {
+            background: #e74c3c;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .waiting-people {
+            display: flex;
+            gap: 10px;
+        }
+
+        .person {
+            width: 40px;
+            height: 40px;
+            background: #95a5a6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+            position: relative;
+        }
+
+        .time-lost {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e74c3c;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7em;
+        }
+
+        .clock-section {
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .clock {
+            font-size: 4em;
+            margin: 20px 0;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .policy-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .policy-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .policy-item ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .policy-item li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .policy-item li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            max-width: 600px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            animation: popupAppear 0.4s ease;
+        }
+
+        @keyframes popupAppear {
+            from {
+                transform: scale(0.7) translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .popup h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            border-bottom: 2px solid #8e44ad;
+            padding-bottom: 10px;
+        }
+
+        .popup p {
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .popup ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .popup li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: #c0392b;
+        }
+
+        .highlight-tip {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .tip-icon {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #dc3545;
+        }
+
+        .success-tip {
+            background: #cce5ff;
+            border: 1px solid #99d6ff;
+            color: #004085;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #007bff;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .protocols {
+                margin: 15px;
+                padding: 20px;
+            }
+            
+            .three-before-me {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-section {
+                flex: none;
+            }
+            
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .popup {
+                margin: 20px;
+                padding: 25px;
+                max-height: 90vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Understanding Class Protocols</h1>
+            <p>Learn the essential guidelines and expectations for successful course participation</p>
+        </div>
+
+        <div class="protocols">
+            <div class="course-title">
+                <h2>NETW 107</h2>
+                <h3>Class Protocols – Spring 2024</h3>
+                <p>Mike Qaissaunee</p>
+            </div>
+
+            <div class="clickable-section" data-info="three-before-me">
+                <div class="three-before-me">
+                    <div class="logo-section">
+                        <div class="logo">
+                            <div class="logo-icons">
+                                <div class="logo-icon">📚</div>
+                                <div class="logo-icon">✉️</div>
+                                <div class="logo-icon">👥</div>
+                                <div class="logo-icon">💻</div>
+                            </div>
+                            3
+                        </div>
+                    </div>
+                    <div class="content-section">
+                        <h3>Embracing the "3 Before Me" Approach to Learning</h3>
+                        <p>We have adopted the "3 Before Me" strategy as part of this course. This means that before seeking help directly, you should explore a minimum of three different resources – course materials, online platforms, and collaboration with classmates for potential solutions. This will boost your understanding and problem-solving skills. If you still need help, I'm here, just share your findings from these resources.</p>
+                        <p><strong>Happy learning!</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clickable-section" data-info="cost-of-late">
+                <div class="cost-of-late">
+                    <h3 style="color: #d35400; margin-bottom: 15px;">⏰ THE COST OF BEING LATE</h3>
+                    <p style="color: #2c3e50; font-weight: bold; margin-bottom: 20px;">DON'T UNDERESTIMATE THE COLLECTIVE WASTE OF TIME</p>
+                    
+                    <div class="cost-illustration">
+                        <div class="late-person">
+                            <div>😰 Oh, sorry guys, I got caught up for</div>
+                            <div><strong>10 minutes</strong></div>
+                        </div>
+                        <div>→</div>
+                        <div class="waiting-people">
+                            <div class="person">
+                                <div class="time-lost">10</div>
+                                👤
+                            </div>
+                            <div class="person">
+                                <div class="time-lost">10</div>
+                                👤
+                            </div>
+                            <div class="person">
+                                <div class="time-lost">10</div>
+                                👤
+                            </div>
+                            <div class="person">
+                                <div class="time-lost">10</div>
+                                👤
+                            </div>
+                            <div class="person">
+                                <div class="time-lost">10</div>
+                                👤
+                            </div>
+                        </div>
+                        <div>=</div>
+                        <div style="background: #e74c3c; color: white; padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 1.5em; font-weight: bold;">⏰ 100 minutes</div>
+                            <div>Gone!</div>
+                        </div>
+                    </div>
+                    
+                    <p style="color: #2c3e50; font-style: italic; text-align: center; margin-top: 20px;">
+                        If you will be missing a class, please notify me prior to the class!
+                    </p>
+                </div>
+            </div>
+
+            <div class="clickable-section" data-info="punctuality-policy">
+                <div class="clock-section">
+                    <h3>🎯 On-Time Triumph: Late Policy Overview</h3>
+                    <div class="clock">⏰</div>
+                    
+                    <div class="policy-grid">
+                        <div class="policy-item">
+                            <h4>1. Deadlines:</h4>
+                            <ul>
+                                <li>Assignments (quizzes, labs, coursework) are due one week from the assigned date</li>
+                                <li>Due dates and times are stated in Canvas</li>
+                            </ul>
+                        </div>
+                        <div class="policy-item">
+                            <h4>2. Late Penalties:</h4>
+                            <ul>
+                                <li>Late submissions lose 10% per week (1.43% per day)</li>
+                                <li>After four weeks, late work is not accepted (zero score)</li>
+                            </ul>
+                        </div>
+                        <div class="policy-item">
+                            <h4>3. Emergencies:</h4>
+                            <ul>
+                                <li>Contact me for possible exceptions in emergencies with the required documentation</li>
+                            </ul>
+                        </div>
+                        <div class="policy-item">
+                            <h4>4. Your Role:</h4>
+                            <ul>
+                                <li>Plan your time well. Technical issues, deadline confusion, or schedule conflicts are not excuses for lateness</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clickable-section" data-info="summary">
+                <div style="background: #ecf0f1; padding: 25px; border-radius: 10px; border-left: 4px solid #34495e;">
+                    <h3 style="color: #2c3e50; margin-bottom: 15px;">🔑 Key Takeaway</h3>
+                    <p style="color: #2c3e50; font-size: 1.1em; line-height: 1.6;">
+                        Remember, punctuality is key to success in this course. Reach out if you have any questions!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="popup" id="popup">
+            <button class="close-btn" onclick="closePopup()">×</button>
+            <div id="popup-content"></div>
+        </div>
+    </div>
+
+    <script>
+        const popupContent = {
+            'three-before-me': {
+                title: 'The "3 Before Me" Learning Strategy',
+                content: `
+                    <p>This innovative approach encourages independent problem-solving and resourcefulness before seeking direct help.</p>
+                    <h4>What the "3 Before Me" strategy means:</h4>
+                    <ul>
+                        <li><strong>Resource 1:</strong> Course materials (textbook, lecture notes, slides, handouts)</li>
+                        <li><strong>Resource 2:</strong> Online platforms (course website, tutorials, documentation, forums)</li>
+                        <li><strong>Resource 3:</strong> Collaboration with classmates (study groups, peer discussions, shared insights)</li>
+                    </ul>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">🧠 Learning Benefits:</span>
+                        <ul>
+                            <li><strong>Problem-solving skills:</strong> Develops critical thinking and research abilities</li>
+                            <li><strong>Retention:</strong> Information you discover yourself is better remembered</li>
+                            <li><strong>Independence:</strong> Builds confidence in your ability to find solutions</li>
+                            <li><strong>Preparation:</strong> Makes instructor meetings more productive and focused</li>
+                        </ul>
+                    </div>
+                    <div class="success-tip">
+                        <span class="tip-icon">💡 Implementation Tips:</span>
+                        <ul>
+                            <li>Document what you've tried and what you learned from each resource</li>
+                            <li>Take notes on specific areas where you're still confused</li>
+                            <li>Prepare specific questions rather than general "I don't understand" statements</li>
+                            <li>Share your research process when asking for help - it shows initiative</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'cost-of-late': {
+                title: 'Understanding the Impact of Lateness',
+                content: `
+                    <p>This powerful visual demonstrates how individual lateness affects the entire learning community.</p>
+                    <h4>The Mathematics of Respect:</h4>
+                    <ul>
+                        <li><strong>Individual impact:</strong> 10 minutes late = personal inconvenience</li>
+                        <li><strong>Group impact:</strong> 10 people waiting × 10 minutes = 100 minutes of collective lost time</li>
+                        <li><strong>Class impact:</strong> Disrupted learning flow, repeated information, lost momentum</li>
+                    </ul>
+                    <div class="warning">
+                        <strong>⚠️ Professional Reality Check:</strong> In the workplace, chronic lateness can lead to missed opportunities, damaged reputation, and even job loss. Developing punctuality habits now sets you up for career success.
+                    </div>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">⏰ Time Management Strategies:</span>
+                        <ul>
+                            <li><strong>Plan buffer time:</strong> Leave 10-15 minutes earlier than you think you need</li>
+                            <li><strong>Prepare the night before:</strong> Pack materials, check transportation, set multiple alarms</li>
+                            <li><strong>Communicate proactively:</strong> If emergencies arise, notify immediately</li>
+                            <li><strong>Learn from delays:</strong> Identify patterns and adjust your routine accordingly</li>
+                        </ul>
+                    </div>
+                    <div class="success-tip">
+                        <span class="tip-icon">🎯 Professional Development:</span> Punctuality demonstrates respect, reliability, and professionalism - all crucial traits for cybersecurity professionals who must be trusted with critical systems and sensitive information.
+                    </div>
+                `
+            },
+            'punctuality-policy': {
+                title: 'Late Policy: Structure and Consequences',
+                content: `
+                    <p>Understanding the late policy helps you plan effectively and avoid unnecessary grade penalties.</p>
+                    <h4>Policy Breakdown & Strategic Planning:</h4>
+                    <ul>
+                        <li><strong>Grace Period:</strong> One week from assigned date - use this time wisely</li>
+                        <li><strong>Penalty Structure:</strong> 10% per week (1.43% daily) - substantial but recoverable if caught early</li>
+                        <li><strong>Hard Deadline:</strong> Four weeks maximum - after this, zero points awarded</li>
+                        <li><strong>Canvas Integration:</strong> All deadlines clearly posted - no excuses for confusion</li>
+                    </ul>
+                    <div class="warning">
+                        <strong>⚠️ Reality Check:</strong> Technical issues, deadline confusion, and schedule conflicts are explicitly NOT valid excuses. Plan accordingly and have backup plans.
+                    </div>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">📊 Grade Impact Calculator:</span>
+                        <ul>
+                            <li><strong>1 week late:</strong> 90% of possible points (A becomes B+)</li>
+                            <li><strong>2 weeks late:</strong> 80% of possible points (A becomes B-)</li>
+                            <li><strong>3 weeks late:</strong> 70% of possible points (A becomes C)</li>
+                            <li><strong>4+ weeks late:</strong> 0% of possible points (No credit)</li>
+                        </ul>
+                    </div>
+                    <div class="success-tip">
+                        <span class="tip-icon">🛡️ Emergency Protocol:</span>
+                        <ul>
+                            <li>Contact instructor immediately when emergencies arise</li>
+                            <li>Provide required documentation promptly</li>
+                            <li>Understand that exceptions are not guaranteed</li>
+                            <li>Plan for contingencies to avoid relying on emergency exceptions</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'summary': {
+                title: 'Keys to Success in This Course',
+                content: `
+                    <p>Success in NETW 107 depends largely on developing professional habits and effective learning strategies.</p>
+                    <h4>Essential Success Factors:</h4>
+                    <ul>
+                        <li><strong>Punctuality:</strong> Arrive on time and prepared for every class</li>
+                        <li><strong>Proactive Learning:</strong> Use the "3 Before Me" strategy consistently</li>
+                        <li><strong>Time Management:</strong> Submit work on time to avoid penalties</li>
+                        <li><strong>Communication:</strong> Reach out early when issues arise</li>
+                    </ul>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">🎯 Professional Skills Development:</span>
+                        <p>These protocols aren't just academic requirements - they mirror professional expectations in cybersecurity careers where reliability, independence, and punctuality are critical for protecting organizational assets.</p>
+                    </div>
+                    <div class="success-tip">
+                        <span class="tip-icon">💼 Career Preparation:</span>
+                        <ul>
+                            <li><strong>Reliability:</strong> Essential for security roles with critical responsibilities</li>
+                            <li><strong>Problem-solving:</strong> Cybersecurity requires independent troubleshooting</li>
+                            <li><strong>Communication:</strong> Incident response demands clear, timely reporting</li>
+                            <li><strong>Time management:</strong> Security updates and patches have strict deadlines</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        function showPopup(sectionId) {
+            const content = popupContent[sectionId];
+            if (content) {
+                document.getElementById('popup-content').innerHTML = `
+                    <h3>${content.title}</h3>
+                    ${content.content}
+                `;
+                document.getElementById('overlay').style.display = 'flex';
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Add click event listeners to all clickable sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const clickableSections = document.querySelectorAll('.clickable-section');
+            clickableSections.forEach(section => {
+                section.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-info');
+                    showPopup(sectionId);
+                });
+            });
+
+            // Close popup when clicking overlay background
+            document.getElementById('overlay').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePopup();
+                }
+            });
+
+            // Close popup with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closePopup();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
