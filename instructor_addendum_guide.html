@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Your Instructor Addendum</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .document {
+            background: #f8f9fa;
+            margin: 30px;
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            position: relative;
+        }
+
+        .document-title {
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .instructor-info {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .clickable-section {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .clickable-section:hover {
+            background: linear-gradient(45deg, #e3f2fd, #f3e5f5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .clickable-section::before {
+            content: "ℹ️";
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 1.2em;
+            opacity: 0.7;
+        }
+
+        .grading-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .grading-table th,
+        .grading-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .grading-table th {
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+
+        .grading-table tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        .grade-scale {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .grade-item {
+            padding: 8px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .dates-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .date-item {
+            padding: 10px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 5px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: popupAppear 0.3s ease;
+        }
+
+        @keyframes popupAppear {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .popup h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .popup p {
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: #c0392b;
+        }
+
+        .highlight-tip {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .tip-icon {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .document {
+                margin: 15px;
+                padding: 20px;
+            }
+            
+            .grade-scale {
+                grid-template-columns: 1fr;
+            }
+            
+            .dates-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .popup {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Understanding Your Instructor Addendum</h1>
+            <p>Click on any section below to learn what it means for your success!</p>
+        </div>
+
+        <div class="document">
+            <div class="document-title">NETW 107<br>Instructor Addendum – Spring 2024<br>Mike Qaissaunee</div>
+            
+            <div class="clickable-section" data-info="course-header">
+                <div class="instructor-info">
+                    <strong>Course:</strong> NETW 107 | <strong>Instructor:</strong> Mike Qaissaunee | <strong>Semester:</strong> Spring 2024
+                </div>
+            </div>
+
+            <div class="clickable-section" data-info="grading-breakdown">
+                <h3>📊 GRADING STANDARD</h3>
+                <p>We will have multiple quizzes throughout the semester. Additionally, students will be expected to complete a series of labs. There will be three exams – each contributing 15% of the course grade, with quizzes and labs combined to make up the remaining 55% of the final course grade.</p>
+                
+                <table class="grading-table">
+                    <tr>
+                        <th>Assignment Type</th>
+                        <th>Percentage</th>
+                    </tr>
+                    <tr><td>Exam 1</td><td>15%</td></tr>
+                    <tr><td>Exam 2</td><td>15%</td></tr>
+                    <tr><td>Exam 3</td><td>15%</td></tr>
+                    <tr><td>Quizzes</td><td>10%</td></tr>
+                    <tr><td>Labs</td><td>45%</td></tr>
+                    <tr><td><strong>Total</strong></td><td><strong>100%</strong></td></tr>
+                </table>
+            </div>
+
+            <div class="clickable-section" data-info="grade-scale">
+                <h3>🎯 GRADE SCALE</h3>
+                <p>The following scale will be used to determine satisfactory progress on each assignment and for determining the final grade:</p>
+                
+                <div class="grade-scale">
+                    <div class="grade-item"><strong>A:</strong> 90 – 100</div>
+                    <div class="grade-item"><strong>A-:</strong> 87 – 89</div>
+                    <div class="grade-item"><strong>B+:</strong> 85 – 86</div>
+                    <div class="grade-item"><strong>B:</strong> 80 – 84</div>
+                    <div class="grade-item"><strong>B-:</strong> 77 – 79</div>
+                    <div class="grade-item"><strong>C+:</strong> 75 – 76</div>
+                    <div class="grade-item"><strong>C:</strong> 70 – 74</div>
+                    <div class="grade-item"><strong>D:</strong> 65 – 69</div>
+                    <div class="grade-item"><strong>F:</strong> 64 and below</div>
+                </div>
+                
+                <div class="warning">
+                    <strong>⚠️ Important:</strong> You must obtain a grade of C or higher before taking any course for which this is a prerequisite.
+                </div>
+            </div>
+
+            <div class="clickable-section" data-info="office-hours">
+                <h3>🏢 OFFICE HOURS</h3>
+                <p><strong>Location:</strong> MAS 110 – TBD</p>
+            </div>
+
+            <div class="clickable-section" data-info="contact-info">
+                <h3>📞 CONTACT INFORMATION</h3>
+                <p><strong>Email:</strong> mqaissaunee@brookdalecc.edu (preferred)</p>
+                <p><strong>Phone:</strong> 732-224-2879</p>
+            </div>
+
+            <div class="clickable-section" data-info="important-dates">
+                <h3>📅 IMPORTANT DATES</h3>
+                <div class="dates-grid">
+                    <div class="date-item">
+                        <strong>First Day of Class:</strong><br>January 22
+                    </div>
+                    <div class="date-item">
+                        <strong>Exam #1 – Week 5:</strong><br>February 19
+                    </div>
+                    <div class="date-item">
+                        <strong>Spring Break:</strong><br>March 10 – 17
+                    </div>
+                    <div class="date-item">
+                        <strong>Exam #2 – Week 11:</strong><br>thru April 15
+                    </div>
+                    <div class="date-item">
+                        <strong>Exam #3 – Week 15:</strong><br>May 6
+                    </div>
+                    <div class="date-item">
+                        <strong>Last Day of Class:</strong><br>May 6
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="popup" id="popup">
+            <button class="close-btn" onclick="closePopup()">×</button>
+            <div id="popup-content"></div>
+        </div>
+    </div>
+
+    <script>
+        const popupContent = {
+            'course-header': {
+                title: 'Course Information Header',
+                content: `
+                    <p>This section tells you the essential course details:</p>
+                    <ul>
+                        <li><strong>Course Code (NETW 107):</strong> This is how the course is identified in the college system</li>
+                        <li><strong>Instructor Name:</strong> Your professor who will be teaching and grading your work</li>
+                        <li><strong>Semester/Term:</strong> When this course is being offered</li>
+                    </ul>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">💡 Tip:</span> Always make note of your instructor's name and the exact course code for registration and communication purposes.
+                    </div>
+                `
+            },
+            'grading-breakdown': {
+                title: 'Grading Standards & Breakdown',
+                content: `
+                    <p>This is one of the MOST IMPORTANT sections! It shows exactly how your final grade will be calculated.</p>
+                    <h4>What this tells you:</h4>
+                    <ul>
+                        <li><strong>Assignment Types:</strong> What kinds of work you'll be doing (exams, labs, quizzes)</li>
+                        <li><strong>Weight/Percentage:</strong> How much each type counts toward your final grade</li>
+                        <li><strong>Expectations:</strong> What the instructor expects you to complete</li>
+                    </ul>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">💡 Strategy Tip:</span> Notice that Labs are worth 45% - almost half your grade! This means lab work should be a top priority for success in this course.
+                    </div>
+                `
+            },
+            'grade-scale': {
+                title: 'Grade Scale & Prerequisites',
+                content: `
+                    <p>This shows you exactly what percentage you need to earn each letter grade.</p>
+                    <h4>Why this matters:</h4>
+                    <ul>
+                        <li><strong>Goal Setting:</strong> You can calculate exactly what scores you need on assignments</li>
+                        <li><strong>Progress Tracking:</strong> Monitor if you're on track for your desired grade</li>
+                        <li><strong>Prerequisites:</strong> Some courses require a minimum grade to advance</li>
+                    </ul>
+                    <div class="warning">
+                        <strong>⚠️ Critical:</strong> This course requires a C or higher to use as a prerequisite. Plan accordingly!
+                    </div>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">💡 Planning Tip:</span> Aim for at least 75% average to ensure you meet prerequisite requirements.
+                    </div>
+                `
+            },
+            'office-hours': {
+                title: 'Office Hours',
+                content: `
+                    <p>Office hours are designated times when your instructor is available to help you one-on-one.</p>
+                    <h4>What you can use office hours for:</h4>
+                    <ul>
+                        <li><strong>Getting Help:</strong> Ask questions about assignments or concepts</li>
+                        <li><strong>Clarification:</strong> Discuss confusing material from class</li>
+                        <li><strong>Feedback:</strong> Get guidance on your progress</li>
+                        <li><strong>Exam Prep:</strong> Review material before tests</li>
+                    </ul>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">💡 Success Tip:</span> Don't wait until you're failing to visit office hours. Successful students use them regularly!
+                    </div>
+                    <p><strong>Note:</strong> "TBD" means "To Be Determined" - your instructor will announce the specific times later.</p>
+                `
+            },
+            'contact-info': {
+                title: 'Contact Information',
+                content: `
+                    <p>This section shows you how to reach your instructor outside of class.</p>
+                    <h4>Communication Guidelines:</h4>
+                    <ul>
+                        <li><strong>Email (Preferred):</strong> Use this for non-urgent questions and formal communication</li>
+                        <li><strong>Phone:</strong> Typically for urgent matters or office hour scheduling</li>
+                        <li><strong>Professional Communication:</strong> Always use proper email etiquette</li>
+                    </ul>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">💡 Email Tips:</span> 
+                        <ul>
+                            <li>Use a clear subject line (e.g., "NETW 107 - Question about Lab 3")</li>
+                            <li>Include your full name and course</li>
+                            <li>Be specific about what you need help with</li>
+                            <li>Allow 24-48 hours for a response</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'important-dates': {
+                title: 'Important Dates & Schedule',
+                content: `
+                    <p>These are the key dates you MUST remember for this course.</p>
+                    <h4>Why these dates matter:</h4>
+                    <ul>
+                        <li><strong>Exam Dates:</strong> You cannot miss these without prior arrangement</li>
+                        <li><strong>Spring Break:</strong> No classes - plan ahead for assignments</li>
+                        <li><strong>Last Day:</strong> When all work must be completed</li>
+                    </ul>
+                    <div class="highlight-tip">
+                        <span class="tip-icon">💡 Organization Tip:</span> 
+                        <ul>
+                            <li>Add ALL these dates to your personal calendar immediately</li>
+                            <li>Set reminders 1-2 weeks before each exam</li>
+                            <li>Plan your study schedule around these dates</li>
+                            <li>Note any conflicts early and discuss with your instructor</li>
+                        </ul>
+                    </div>
+                    <div class="warning">
+                        <strong>⚠️ Remember:</strong> Missing exam dates typically results in a zero unless you have prior approval or a documented emergency.
+                    </div>
+                `
+            }
+        };
+
+        function showPopup(sectionId) {
+            const content = popupContent[sectionId];
+            if (content) {
+                document.getElementById('popup-content').innerHTML = `
+                    <h3>${content.title}</h3>
+                    ${content.content}
+                `;
+                document.getElementById('overlay').style.display = 'flex';
+            }
+        }
+
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Add click event listeners to all clickable sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const clickableSections = document.querySelectorAll('.clickable-section');
+            clickableSections.forEach(section => {
+                section.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('data-info');
+                    showPopup(sectionId);
+                });
+            });
+
+            // Close popup when clicking overlay background
+            document.getElementById('overlay').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePopup();
+                }
+            });
+
+            // Close popup with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closePopup();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
